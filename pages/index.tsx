@@ -4,6 +4,7 @@ import Hero from '../components/Hero'
 import { useWeb3 } from '@3rdweb/hooks'
 import { useEffect } from 'react'
 import { client } from '../lib/sanityClient'
+import toast, { Toaster } from 'react-hot-toast'
 
 const style = {
   wrapper: ``,
@@ -14,6 +15,17 @@ const style = {
 
 const Home: NextPage = () => {
   const { address, connectWallet, disconnectWallet } = useWeb3()
+  const welcomeUser = (userName: string, toastHandler = toast) => {
+    toastHandler.success(
+      `Welcome back${userName !== 'Unnamed' ? ` ${userName}` : ''}!`,
+      {
+        style: {
+          background: '#04111d',
+          color: '#fff',
+        },
+      }
+    )
+  }
 
   useEffect(() => {
     if (!address) return
@@ -26,12 +38,13 @@ const Home: NextPage = () => {
       }
 
       const result = await client.createIfNotExists(userDoc)
+      welcomeUser(result.userName)
     })()
   }, [address])
 
-  console.log('address:', address)
   return (
     <div className={style.wrapper}>
+      <Toaster position="top-center" reverseOrder={false} />
       {address ? (
         <>
           <Header />
