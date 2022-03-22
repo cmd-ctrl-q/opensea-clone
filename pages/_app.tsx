@@ -4,7 +4,7 @@ import { ThirdwebWeb3Provider } from '@3rdweb/hooks'
 
 /**
  *
- * The chain ID 4 represents the Rinkeby network
+ * The chain ID 4 represents the  network
  * The `injected` connector is web3 connection method used by Metamask
  */
 const supportedChainIds = [4]
